@@ -1,0 +1,15 @@
+{{ range . -}}
+location {{- if .IsRegex}} ~ {{- else}} = {{- end }} {{ .Prefix}}{{.Path}} {
+        proxy_read_timeout 45s;
+        set $upstream {{.Upstream}};
+        set $locid {{.Id}};
+        include /etc/nginx/conf.d/include/default-cors.loc;
+        include /etc/nginx/conf.d/include/default-headers.loc;
+        limit_except OPTIONS{{range .Limits}} {{.}}{{end}} {
+          deny all;
+        }
+        if ($request_uri ~* "{{.Prefix}}/(.*))" {
+         proxy_pass http://$upstream/$1;
+        }
+}
+{{ end -}}

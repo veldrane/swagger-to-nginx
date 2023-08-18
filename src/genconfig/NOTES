@@ -1,0 +1,34 @@
+=== Co taky funguje :))
+
+
+func (target *Swagger_t) GetEndpoints() *map[string]*Paths_t {
+
+	var endpoints map[string]*Paths_t = make(map[string]*Paths_t)
+    .
+    .
+	return &endpoints
+}
+
+allendpoints := swag.GetEndpoints()
+fmt.Println (swag)
+endpoint := (*allendpoints)["/api/latest/betslip-view/filter"].Summary
+fmt.Println (endpoint)
+}
+
+
+=== Tests v main.go ===
+
+swag.TestSwaggerObject()
+endpoint := swag.GetEndpoint("/api/latest/betslip-view/filter")
+// endpoint := swag.GetEndpointByMethod("/api/latest/betslip-view/filter","post")
+//fmt.Println ((*endpoint.Parameters[0].Description))
+fmt.Println(swag)
+fmt.Println(endpoint.Methods["post"].Parameters[3].Description)
+
+
+....
+....
+
+endpoint := swag.GetEndpoint("/api/latest/betslips/{betslipId}/legs/{legId}/set-group")
+endpoint.GetNginxPath()
+fmt.Println(endpoint.NginxPath)
